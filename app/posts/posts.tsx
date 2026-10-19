@@ -7,16 +7,16 @@ import posts from "../mockdata/posts";
 import { useEffect, useState } from "react";
 
 export default function Posts({isAdmin } : {isAdmin: boolean}) {
-  const searchablePosts = posts.map((post) => ({
+
+  const [query, setQuery] = useState("");
+  const [debouncedQuery, setDebouncedQuery] = useState(query);
+    const searchablePosts = posts.map((post) => ({
     ...post,
     searchIndex: [post.title, post.tags.join(" "), post.content]
       .join(" ")
       .toLowerCase(),
   }));
-
-  const [query, setQuery] = useState("");
-  const [debouncedQuery, setDebouncedQuery] = useState(query);
-
+  
   useEffect(() => {
     const timeout = setTimeout(() => {
       setDebouncedQuery(query);
